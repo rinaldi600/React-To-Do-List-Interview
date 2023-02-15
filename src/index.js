@@ -5,7 +5,6 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {
   createBrowserRouter,
-  HashRouter,
   RouterProvider,
 } from "react-router-dom";
 import DetailActivity from './img/DetailActivity/detail-activity';
@@ -26,9 +25,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
     <React.StrictMode>
-      <HashRouter>
-        <RouterProvider router={router} />
-      </HashRouter>
+      <RouterProvider router={router} />
     </React.StrictMode>
   </Provider>
 );
