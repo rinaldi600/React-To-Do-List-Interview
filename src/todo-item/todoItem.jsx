@@ -48,7 +48,7 @@ function TodoItem({todoItem, isActive ,priority ,nameTODO, indicatorTODO, idTODO
     };
 
     return (
-        <div data-cy={`todo-item-${todoItem}`} className="w-full p-2 mb-3 flex justify-between items-center bg-white min-h-[80px] rounded-[12px]">
+        <div data-cy={`todo-item`} className="w-full p-2 mb-3 flex justify-between items-center bg-white min-h-[80px] rounded-[12px]">
             <div className="flex items-center gap-4">
                 <div class="flex items-center">
                     <input checked={isActive ? false : true} onChange={(e) => getChecked(e)} data-cy='todo-item-checkbox' id="default-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
