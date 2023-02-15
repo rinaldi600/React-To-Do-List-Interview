@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/React-To-Do-List-Interview/static/css/main.b710d4eb.css",
-    "main.js": "/React-To-Do-List-Interview/static/js/main.d53a9198.js",
+    "main.js": "/React-To-Do-List-Interview/static/js/main.45d6528d.js",
     "static/js/393.d13a65a3.chunk.js": "/React-To-Do-List-Interview/static/js/393.d13a65a3.chunk.js",
     "static/js/869.f7750ecc.chunk.js": "/React-To-Do-List-Interview/static/js/869.f7750ecc.chunk.js",
     "static/js/787.1dad13f8.chunk.js": "/React-To-Do-List-Interview/static/js/787.1dad13f8.chunk.js",
@@ -9,13 +9,13 @@
     "static/media/todo-empty-state.png": "/React-To-Do-List-Interview/static/media/todo-empty-state.6dc38bf3169f41c9faac.png",
     "index.html": "/React-To-Do-List-Interview/index.html",
     "main.b710d4eb.css.map": "/React-To-Do-List-Interview/static/css/main.b710d4eb.css.map",
-    "main.d53a9198.js.map": "/React-To-Do-List-Interview/static/js/main.d53a9198.js.map",
+    "main.45d6528d.js.map": "/React-To-Do-List-Interview/static/js/main.45d6528d.js.map",
     "393.d13a65a3.chunk.js.map": "/React-To-Do-List-Interview/static/js/393.d13a65a3.chunk.js.map",
     "869.f7750ecc.chunk.js.map": "/React-To-Do-List-Interview/static/js/869.f7750ecc.chunk.js.map",
     "787.1dad13f8.chunk.js.map": "/React-To-Do-List-Interview/static/js/787.1dad13f8.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.b710d4eb.css",
-    "static/js/main.d53a9198.js"
+    "static/js/main.45d6528d.js"
   ]
 }
