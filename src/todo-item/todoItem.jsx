@@ -57,7 +57,7 @@ function TodoItem({todoItem, isActive ,priority ,nameTODO, indicatorTODO, idTODO
                     <svg data-cy='todo-item-priority-indicator' xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill={indicatorTODO} class={`bi bi-circle-fill`} viewBox="0 0 16 16">
                     <circle cx="8" cy="8" r="8"/>
                     </svg>
-                    <h1 data-cy='todo-item-title' className={`text-[#111111] text-lg ${isActive ? '' : 'line-through'}`}>{nameTODO}</h1>
+                    <h1 data-cy='todo-title' className={`text-[#111111] text-lg ${isActive ? '' : 'line-through'}`}>{nameTODO}</h1>
                     <svg onClick={() => detailTODOEdit({
                         idTODO,
                         nameTODO,

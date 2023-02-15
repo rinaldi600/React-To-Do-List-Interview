@@ -99,9 +99,11 @@ function App() {
     <div className={`App bg-[#F4F4F4] font-poppins relative ${modalDeleteActivity || popUp ? 'overflow-hidden h-[1000px]' : ''}`}>
       <div data-cy='header-background' className='h-[105px] bg-[#16ABF8] flex items-center justify-center'>
         <div className='w-[976px]'>
-          <h2 data-cy='header-title' className='text-white text-start font-bold text-2xl'>
-            TO DO LIST APP
-          </h2>
+          <div data-cy='header-title'>
+            <h2 className='text-white text-start font-bold text-2xl'>
+              TO DO LIST APP
+            </h2>
+          </div>
         </div>
       </div>
       <div className='max-w-[976px] mx-auto min-h-screen'>
