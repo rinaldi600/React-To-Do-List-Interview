@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState, Suspense, lazy } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { useParams } from "react-router-dom";
 import TodoEmptyState from '../todo-empty-state.png';
 import { Link } from "react-router-dom";
@@ -7,7 +7,6 @@ import TodoItem from "../../todo-item/todoItem";
 import TODODelete from "../../todo-delete/todoDelete";
 import PopUpDelete from "../../popup-delete/popUpDelete";
 import EditTODOActivity from "../../edit-todo-activity/editTODOActivity";
-
 
 const UpdateTitleActivity = React.lazy(() => import('../../update-title-activity/UpdateTitleActivityComponent'));
 
@@ -69,13 +68,24 @@ function DetailActivity() {
     }
 
     const chooseFilter = (typeFilter) => {
+        if (typeFilter === 'sort-latest') {
+            
+        } else if (typeFilter === 'sort-oldest') {
+            
+        } else if (typeFilter === 'sort-az') {
+            allTODO.sort((a, b) => (a.title > b.title) ? 1 : -1)
+        } else if (typeFilter === 'sort-za') {
+            allTODO.sort((a, b) => (a.title > b.title) ? -1 : 1)
+        } else {
+            allTODO.sort((a, b) => b.is_active - a.is_active);
+            console.log(allTODO.sort((a, b) => b.is_active - a.is_active));
+        }
         getTypeFilter(typeFilter);
     }
 
     const closeModalAddTODO = (e) => {
         axios.get(`https://todo.api.devcode.gethired.id/todo-items?activity_group_id=${idActivity}`)
         .then((success) => {
-            console.log(success)
             if (success.status === 200) {
                 getAllTODO(success.data.data)
                 setAddTODO(e);
@@ -267,7 +277,7 @@ function DetailActivity() {
                     <div className="w-full">
                         {
                             allTODO.map((todo,index) => (
-                                <TodoItem detailTODOEdit={detailTODOEdit} detailActivityDelete={detailActivityDelete} priority={todo?.priority} todoItem={index} idTODO={todo?.id} indicatorTODO={getBg(todo?.priority)} nameTODO={todo?.title}/>
+                                <TodoItem detailTODOEdit={detailTODOEdit} detailActivityDelete={detailActivityDelete} isActive={todo?.is_active} priority={todo?.priority} todoItem={index} idTODO={todo?.id} indicatorTODO={getBg(todo?.priority)} nameTODO={todo?.title}/>
                             ))
                         }
                     </div>

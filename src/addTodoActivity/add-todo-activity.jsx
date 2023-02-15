@@ -31,7 +31,7 @@ function AddTODOActivity({closeModalAddTODO, idActivity}) {
             activity_group_id: idActivity,
             title : valueTODO,
             priority : valuePriority === '' ? 'very-high' : valuePriority,
-            is_active : true
+            is_active : true,
           })
           .then(function (response) {
             if (response.status === 201) {

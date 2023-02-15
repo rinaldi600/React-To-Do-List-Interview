@@ -1,4 +1,4 @@
-import { useEffect, useState, Suspense, lazy, fallback } from 'react';
+import { useEffect, useState, Suspense} from 'react';
 import './App.css';
 import ActivityItem from './activity-item/activity-item';
 import EmptyActivity from './img/activity-empty-state.png';
@@ -130,7 +130,7 @@ function App() {
           </div>
           <div className={`${modalDeleteActivity ? 'block' : 'hidden'}`}>
                 <Suspense fallback={<div>Loading...</div>}>
-                    <DeleteActivity setModalDeleteActivity={modalActivityFetch} detailActivityToDelete={getDetailActivity}/>
+                    <DeleteActivity setModalDeleteActivity={modalActivityFetch} cancelDelete={setModalDeleteActivity} detailActivityToDelete={getDetailActivity}/>
                 </Suspense>
           </div>
           <div className={`${popUp ? 'block' : 'hidden'}`}>

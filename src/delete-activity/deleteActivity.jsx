@@ -1,6 +1,6 @@
 import axios from "axios";
 
-function DeleteActivity({detailActivityToDelete, setModalDeleteActivity}) {
+function DeleteActivity({detailActivityToDelete, setModalDeleteActivity, cancelDelete}) {
 
     const deleteThisActivity = () => {
         axios.delete(`https://todo.api.devcode.gethired.id/activity-groups/${detailActivityToDelete?.idActivity}`)
@@ -26,7 +26,7 @@ function DeleteActivity({detailActivityToDelete, setModalDeleteActivity}) {
                         <span className="font-bold">“{detailActivityToDelete?.title}”?</span> 
                     </h1>
                     <div className="flex w-[80%] mx-auto p-5 justify-between items-center flex-wrap">
-                        <button onClick={() => setModalDeleteActivity(false)} data-cy='modal-delete-cancel-button' className="w-[150px] rounded-[45px] text-[#4A4A4A] font-semibold bg-[#F4F4F4] min-h-[54px]">
+                        <button onClick={() => cancelDelete(false)} data-cy='modal-delete-cancel-button' className="w-[150px] rounded-[45px] text-[#4A4A4A] font-semibold bg-[#F4F4F4] min-h-[54px]">
                             Batal
                         </button>
                         <button onClick={deleteThisActivity} data-cy='modal-delete-confirm-button' className="w-[150px] rounded-[45px] text-white font-semibold bg-[#ED4C5C] min-h-[54px]">

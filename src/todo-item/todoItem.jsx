@@ -1,8 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import TODODelete from "../todo-delete/todoDelete";
 
-function TodoItem({todoItem, priority ,nameTODO, indicatorTODO, idTODO, detailActivityDelete, detailTODOEdit}) {
+function TodoItem({todoItem, isActive ,priority ,nameTODO, indicatorTODO, idTODO, detailActivityDelete, detailTODOEdit}) {
 
     const [finish, setFinish] = useState(true);
     useEffect(() => {
@@ -17,6 +16,7 @@ function TodoItem({todoItem, priority ,nameTODO, indicatorTODO, idTODO, detailAc
         })
     }, []);
 
+
     const getChecked = (e) => {
         if (e.target.checked) {
             axios.patch(`https://todo.api.devcode.gethired.id/todo-items/${idTODO}`, {
@@ -25,6 +25,7 @@ function TodoItem({todoItem, priority ,nameTODO, indicatorTODO, idTODO, detailAc
             .then((success) => {
                 if (success.status === 200) {
                     setFinish(false);
+                    window.location.reload(); 
                 }
             })
             .catch((error) => {
@@ -37,6 +38,7 @@ function TodoItem({todoItem, priority ,nameTODO, indicatorTODO, idTODO, detailAc
             .then((success) => {
                 if (success.status === 200) {
                     setFinish(true);
+                    window.location.reload(); 
                 }
             })
             .catch((error) => {
@@ -49,13 +51,13 @@ function TodoItem({todoItem, priority ,nameTODO, indicatorTODO, idTODO, detailAc
         <div data-cy={`todo-item-${todoItem}`} className="w-full p-2 mb-3 flex justify-between items-center bg-white min-h-[80px] rounded-[12px]">
             <div className="flex items-center gap-4">
                 <div class="flex items-center">
-                    <input checked={finish ? false : true} onChange={(e) => getChecked(e)} data-cy='todo-item-checkbox' id="default-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+                    <input checked={isActive ? false : true} onChange={(e) => getChecked(e)} data-cy='todo-item-checkbox' id="default-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
                 </div>
                 <div className="flex items-center gap-2">
                     <svg data-cy='todo-item-priority-indicator' xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill={indicatorTODO} class={`bi bi-circle-fill`} viewBox="0 0 16 16">
                     <circle cx="8" cy="8" r="8"/>
                     </svg>
-                    <h1 data-cy='todo-item-title' className={`text-[#111111] text-lg ${finish ? '' : 'line-through'}`}>{nameTODO}</h1>
+                    <h1 data-cy='todo-item-title' className={`text-[#111111] text-lg ${isActive ? '' : 'line-through'}`}>{nameTODO}</h1>
                     <svg onClick={() => detailTODOEdit({
                         idTODO,
                         nameTODO,

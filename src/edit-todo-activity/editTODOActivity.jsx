@@ -1,5 +1,6 @@
 import axios from "axios";
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
+
 function EditTODOActivity({setEditModal, getDetailTODOEdit, indicatorTODO, closeModalEdit}) {
 
     const [bg, setBg] = useState('')
@@ -28,7 +29,7 @@ function EditTODOActivity({setEditModal, getDetailTODOEdit, indicatorTODO, close
     const editTODO = () => {
         axios.patch(`https://todo.api.devcode.gethired.id/todo-items/${getDetailTODOEdit?.idTODO}`, {
             title : valueTODO,
-            priority : valuePriority === '' ? getDetailTODOEdit?.priority : valuePriority
+            priority : valuePriority === '' ? getDetailTODOEdit?.priority : valuePriority,
         })
         .then((success) => {
             if (success.status === 200) {
