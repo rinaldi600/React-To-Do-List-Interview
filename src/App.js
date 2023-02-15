@@ -1,13 +1,14 @@
-import { useEffect, useState, Suspense} from 'react';
+import React, { useEffect, useState, Suspense} from 'react';
 import './App.css';
-import ActivityItem from './activity-item/activity-item';
 import EmptyActivity from './img/activity-empty-state.png';
 import axios from 'axios';
 import { fetchActivity } from './fetchApi/getActivityAll';
 import { useSelector, useDispatch } from 'react-redux'
 import { stopNewFetch } from './features/fetchSlice';
-import DeleteActivity from './delete-activity/deleteActivity';
-import PopUpDelete from './popup-delete/popUpDelete';
+
+const ActivityItem = React.lazy(() => import('./activity-item/activity-item'));
+const DeleteActivity = React.lazy(() => import('./delete-activity/deleteActivity'));
+const PopUpDelete = React.lazy(() => import('./popup-delete/popUpDelete'));
 
 function App() {
   const [getAllActivity, setActivity] = useState([]);
@@ -122,7 +123,9 @@ function App() {
               <div className='flex flex-wrap gap-2 mt-10 justify-center'>
                 {
                   getAllActivity.map((activity,index) => (
-                    <ActivityItem idActivity={activity.id} title={activity?.title} date={activity?.created_at} deleteActivityThis={deleteActivityThis} dataCy={`activity-item-${index}`}/>
+                    <Suspense fallback={<div>Loading</div>} >
+                      <ActivityItem idActivity={activity.id} title={activity?.title} date={activity?.created_at} deleteActivityThis={deleteActivityThis} dataCy={`activity-item-${index}`}/>
+                    </Suspense>
                   ))
                 }
               </div>

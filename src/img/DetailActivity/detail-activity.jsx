@@ -3,14 +3,13 @@ import React, { useEffect, useState, Suspense } from "react";
 import { useParams } from "react-router-dom";
 import TodoEmptyState from '../todo-empty-state.png';
 import { Link } from "react-router-dom";
-import TodoItem from "../../todo-item/todoItem";
-import TODODelete from "../../todo-delete/todoDelete";
-import PopUpDelete from "../../popup-delete/popUpDelete";
-import EditTODOActivity from "../../edit-todo-activity/editTODOActivity";
 
 const UpdateTitleActivity = React.lazy(() => import('../../update-title-activity/UpdateTitleActivityComponent'));
-
 const AddTODO = React.lazy(() => import('../../addTodoActivity/add-todo-activity'));
+const TodoItem = React.lazy(() => import('../../todo-item/todoItem'));
+const TODODelete = React.lazy(() => import('../../todo-delete/todoDelete'));
+const PopUpDelete = React.lazy(() => import('../../popup-delete/popUpDelete'));
+const EditTODOActivity = React.lazy(() => import('../../edit-todo-activity/editTODOActivity'));
 
 function DetailActivity() {
 
@@ -277,7 +276,9 @@ function DetailActivity() {
                     <div className="w-full">
                         {
                             allTODO.map((todo,index) => (
-                                <TodoItem detailTODOEdit={detailTODOEdit} detailActivityDelete={detailActivityDelete} isActive={todo?.is_active} priority={todo?.priority} todoItem={index} idTODO={todo?.id} indicatorTODO={getBg(todo?.priority)} nameTODO={todo?.title}/>
+                                <Suspense fallback={<div>Loading</div>}>
+                                    <TodoItem detailTODOEdit={detailTODOEdit} detailActivityDelete={detailActivityDelete} isActive={todo?.is_active} priority={todo?.priority} todoItem={index} idTODO={todo?.id} indicatorTODO={getBg(todo?.priority)} nameTODO={todo?.title}/>
+                                </Suspense>
                             ))
                         }
                     </div>
