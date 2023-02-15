@@ -4,15 +4,14 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {
-  createBrowserRouter,
   RouterProvider,
-  HashRouter
+  createHashRouter,
 } from "react-router-dom";
 import DetailActivity from './img/DetailActivity/detail-activity';
 import store from './store';
 import { Provider } from 'react-redux'
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: "/",
     element: <App/>,
@@ -26,9 +25,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
     <React.StrictMode>
-      <HashRouter basename='/'>
         <RouterProvider router={router} />
-      </HashRouter>
     </React.StrictMode>
   </Provider>
 );
