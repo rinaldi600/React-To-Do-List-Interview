@@ -1,10 +1,8 @@
 import moment from 'moment'
 import { useNavigate } from "react-router-dom";
-import axios from 'axios';
-import { getNewFetch } from '../features/fetchSlice';
 import { useDispatch } from 'react-redux'
 
-function ActivityItem({dataCy, title, date, idActivity}) {
+function ActivityItem({dataCy, title, date, idActivity, deleteActivityThis}) {
 
     const navigate = useNavigate();
     const dispatch = useDispatch()
@@ -14,16 +12,11 @@ function ActivityItem({dataCy, title, date, idActivity}) {
     }
 
     const deleteActivity = (e) => {
-        axios.delete(`https://todo.api.devcode.gethired.id/activity-groups/${idActivity}`)
-        .then((success) => {
-            if (success.status === 200) {
-                dispatch(getNewFetch())
-            }
-            console.log(success);
-        })
-        .catch((error) => {
-            console.log(error);
-        })
+        deleteActivityThis({
+            title,
+            idActivity,
+            valueModalDelete : true,
+        });
         e.stopPropagation();
     };
 

@@ -4,6 +4,9 @@ import { useParams } from "react-router-dom";
 import TodoEmptyState from '../todo-empty-state.png';
 import { Link } from "react-router-dom";
 import TodoItem from "../../todo-item/todoItem";
+import TODODelete from "../../todo-delete/todoDelete";
+import PopUpDelete from "../../popup-delete/popUpDelete";
+import EditTODOActivity from "../../edit-todo-activity/editTODOActivity";
 
 
 const UpdateTitleActivity = React.lazy(() => import('../../update-title-activity/UpdateTitleActivityComponent'));
@@ -19,6 +22,11 @@ function DetailActivity() {
     const [valueToggleFilter, toggleFilter] = useState(false);
     const [filter, getTypeFilter] = useState('')
     const [allTODO, getAllTODO] = useState([]);
+    const [getDetailActivityDelete, setDetailActivityDelete] = useState({});
+    const [valueToggleDelete, toggleDelete] = useState(false);
+    const [popUpSuccessDelete, setPopUp] = useState(false);
+    const [showEditModal, setEditModal] = useState(false);
+    const [getDetailTODOEdit, setDetailTODOEdit] = useState({});
 
     useEffect(() => {
         axios.get(`https://todo.api.devcode.gethired.id/activity-groups/${idActivity}`)
@@ -91,8 +99,51 @@ function DetailActivity() {
             return '#8942C1'
         }
     }
+
+    const detailActivityDelete = (e) => {
+        setDetailActivityDelete(e);
+        toggleDelete(e.valueDelete)
+    }
+
+    const detailTODOEdit = (e) => {
+        setDetailTODOEdit(e);
+        setEditModal(e.editModal);
+    }
+
+    const closeModalDelete = (e) => {
+        axios.get(`https://todo.api.devcode.gethired.id/todo-items?activity_group_id=${idActivity}`)
+        .then((success) => {
+            console.log(success)
+            if (success.status === 200) {
+                getAllTODO(success.data.data)
+                toggleDelete(e);
+                setPopUp(true);
+                setTimeout(() => {
+                    setPopUp(false);
+                }, 2500)
+            }
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+    }
+
+    const closeModalEdit = (e) => {
+        axios.get(`https://todo.api.devcode.gethired.id/todo-items?activity_group_id=${idActivity}`)
+        .then((success) => {
+            console.log(success)
+            if (success.status === 200) {
+                getAllTODO(success.data.data)
+                setEditModal(e);
+            }
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+    }
+    
     return (
-        <div className={`App bg-[#F4F4F4] ${showUpdateTitleActivity || showAddTODO ? 'overflow-hidden' : '' } font-poppins`}>
+        <div className={`App bg-[#F4F4F4] ${showUpdateTitleActivity || showAddTODO || valueToggleDelete || popUpSuccessDelete || showEditModal ? 'overflow-hidden' : '' } font-poppins`}>
         <div data-cy='header-background' className='h-[105px] bg-[#16ABF8] flex items-center justify-center'>
           <div className='w-[976px]'>
             <h2 data-cy='header-background' className='text-white text-start font-bold text-2xl'>
@@ -100,7 +151,7 @@ function DetailActivity() {
             </h2>
           </div>
         </div>
-        <div className={`max-w-[976px] mx-auto ${showUpdateTitleActivity || showAddTODO ? 'min-h-fit' : 'min-h-screen' }`}>
+        <div className={`max-w-[976px] mx-auto ${showUpdateTitleActivity || showAddTODO || valueToggleDelete || popUpSuccessDelete || showEditModal ? 'min-h-fit' : 'min-h-screen' }`}>
             <div className='flex mt-9 mx-auto flex-wrap mobile:gap-2 justify-between items-center'>
                 <div className="flex items-center gap-4">
                     <Link data-cy='todo-back-button' to={'/'}>
@@ -216,7 +267,7 @@ function DetailActivity() {
                     <div className="w-full">
                         {
                             allTODO.map((todo,index) => (
-                                <TodoItem todoItem={index} idTODO={todo?.id} indicatorTODO={getBg(todo?.priority)} nameTODO={todo?.title}/>
+                                <TodoItem detailTODOEdit={detailTODOEdit} detailActivityDelete={detailActivityDelete} priority={todo?.priority} todoItem={index} idTODO={todo?.id} indicatorTODO={getBg(todo?.priority)} nameTODO={todo?.title}/>
                             ))
                         }
                     </div>
@@ -225,6 +276,21 @@ function DetailActivity() {
                         <img onClick={() => setAddTODO(true)} data-cy='todo-empty-state' src={TodoEmptyState} alt="empty" />
                     </div>
                 }
+            </div>
+            <div className={`${valueToggleDelete ? 'block' : 'hidden'}`}>
+                <Suspense fallback={<div>Loading...</div>}>
+                    <TODODelete closeModalDelete={closeModalDelete} toggleDelete={toggleDelete} detailActivityDelete={getDetailActivityDelete}/>
+                </Suspense>
+            </div>
+            <div className={`${popUpSuccessDelete ? 'block' : 'hidden'}`}>
+                <Suspense fallback={<div>Loading...</div>}>
+                    <PopUpDelete detail={'Item'}/>
+                </Suspense>
+            </div>
+            <div className={`${showEditModal ? 'block' : 'hidden'}`}>
+                <Suspense fallback={<div>Loading...</div>}>
+                    <EditTODOActivity closeModalEdit={closeModalEdit} indicatorTODO={getBg(getDetailTODOEdit?.priority)} getDetailTODOEdit={getDetailTODOEdit} setEditModal={setEditModal}/>
+                </Suspense>
             </div>
         </div>
         </div>

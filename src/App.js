@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense, lazy, fallback } from 'react';
 import './App.css';
 import ActivityItem from './activity-item/activity-item';
 import EmptyActivity from './img/activity-empty-state.png';
@@ -6,10 +6,15 @@ import axios from 'axios';
 import { fetchActivity } from './fetchApi/getActivityAll';
 import { useSelector, useDispatch } from 'react-redux'
 import { stopNewFetch } from './features/fetchSlice';
+import DeleteActivity from './delete-activity/deleteActivity';
+import PopUpDelete from './popup-delete/popUpDelete';
 
 function App() {
   const [getAllActivity, setActivity] = useState([]);
-  const fetchSlice = useSelector(state => state.fetchSlice.value)
+  const fetchSlice = useSelector(state => state.fetchSlice.value);
+  const [modalDeleteActivity, setModalDeleteActivity] = useState(false);
+  const [getDetailActivity, setDetailActivity] = useState({});
+  const [popUp, setPopUp] = useState(false)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -65,8 +70,33 @@ function App() {
     });
   };
 
+  const deleteActivityThis = (e) => {
+      setDetailActivity(e);
+      setModalDeleteActivity(e.valueModalDelete);
+  };
+
+  const modalActivityFetch = (e) => {
+      fetchActivity()
+      .then(function (response) {
+        if (response.status === 200) {
+          setModalDeleteActivity(e);
+          setPopUp(true);
+          setActivity(response.data.data);
+          dispatch(stopNewFetch());
+          setInterval(() => {
+            setPopUp(false);
+          }, 2500)
+        };
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+      .finally(function () {
+        // always executed
+      });
+  }
   return (
-    <div className="App bg-[#F4F4F4] font-poppins">
+    <div className={`App bg-[#F4F4F4] font-poppins relative ${modalDeleteActivity || popUp ? 'overflow-hidden h-[1000px]' : ''}`}>
       <div data-cy='header-background' className='h-[105px] bg-[#16ABF8] flex items-center justify-center'>
         <div className='w-[976px]'>
           <h2 data-cy='header-background' className='text-white text-start font-bold text-2xl'>
@@ -90,13 +120,23 @@ function App() {
               <div className='flex flex-wrap gap-2 mt-10 justify-center'>
                 {
                   getAllActivity.map((activity,index) => (
-                    <ActivityItem idActivity={activity.id} title={activity?.title} date={activity?.created_at} dataCy={`activity-item-${index}`}/>
+                    <ActivityItem idActivity={activity.id} title={activity?.title} date={activity?.created_at} deleteActivityThis={deleteActivityThis} dataCy={`activity-item-${index}`}/>
                   ))
                 }
               </div>
               :
               <img data-cy='activity-empty-state' src={EmptyActivity} alt="empty" />
             }
+          </div>
+          <div className={`${modalDeleteActivity ? 'block' : 'hidden'}`}>
+                <Suspense fallback={<div>Loading...</div>}>
+                    <DeleteActivity setModalDeleteActivity={modalActivityFetch} detailActivityToDelete={getDetailActivity}/>
+                </Suspense>
+          </div>
+          <div className={`${popUp ? 'block' : 'hidden'}`}>
+              <Suspense fallback={<div>Loading...</div>}>
+                  <PopUpDelete title={"Activity"}/>
+              </Suspense>
           </div>
       </div>
     </div>
