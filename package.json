@@ -1,7 +1,7 @@
 {
   "name": "to-do-list-app",
   "version": "0.1.0",
-  "homepage" : "http://rinaldi600.github.io/React-To-Do-List-Interview/",
+  "homepage": "http://rinaldi600.github.io/React-To-Do-List-Interview/",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.2",
@@ -20,8 +20,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "predeploy" : "npm run build",
-    "deploy" : "gh-pages -d build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
