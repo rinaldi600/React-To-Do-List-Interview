@@ -24,13 +24,6 @@ const router = createHashRouter([
   }
 ]);
 const root = ReactDOM.createRoot(document.getElementById('root'));
-// root.render(
-//   <Provider store={store}>
-//     <React.StrictMode>
-//         <RouterProvider router={router} />
-//     </React.StrictMode>
-//   </Provider>
-// );
 
 root.render(
   <Provider store={store}>

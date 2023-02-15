@@ -99,7 +99,7 @@ function App() {
     <div className={`App bg-[#F4F4F4] font-poppins relative ${modalDeleteActivity || popUp ? 'overflow-hidden h-[1000px]' : ''}`}>
       <div data-cy='header-background' className='h-[105px] bg-[#16ABF8] flex items-center justify-center'>
         <div className='w-[976px]'>
-          <h2 data-cy='header-background' className='text-white text-start font-bold text-2xl'>
+          <h2 data-cy='header-title' className='text-white text-start font-bold text-2xl'>
             TO DO LIST APP
           </h2>
         </div>
@@ -125,7 +125,7 @@ function App() {
                 }
               </div>
               :
-              <img data-cy='activity-empty-state' src={EmptyActivity} alt="empty" />
+              <img data-cy='activity-item' src={EmptyActivity} alt="empty" />
             }
           </div>
           <div className={`${modalDeleteActivity ? 'block' : 'hidden'}`}>
