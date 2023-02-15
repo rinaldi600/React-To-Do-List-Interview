@@ -6,6 +6,9 @@ import reportWebVitals from './reportWebVitals';
 import {
   RouterProvider,
   createHashRouter,
+  HashRouter,
+  Route,
+  Routes,
 } from "react-router-dom";
 import DetailActivity from './img/DetailActivity/detail-activity';
 import store from './store';
@@ -22,10 +25,23 @@ const router = createHashRouter([
   }
 ]);
 const root = ReactDOM.createRoot(document.getElementById('root'));
+// root.render(
+//   <Provider store={store}>
+//     <React.StrictMode>
+//         <RouterProvider router={router} />
+//     </React.StrictMode>
+//   </Provider>
+// );
+
 root.render(
   <Provider store={store}>
     <React.StrictMode>
-        <RouterProvider router={router} />
+        <HashRouter basename='/'>
+          <Routes>
+              <Route path="/" element={<App />} />
+              <Route path="detail/:idActivity" element={<DetailActivity />} />
+          </Routes>
+        </HashRouter>
     </React.StrictMode>
   </Provider>
 );
